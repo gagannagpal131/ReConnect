@@ -1,8 +1,8 @@
 import re
 
-inputStr = "String temp = \"C++ and Python\""
+inputStr = "String temp = \"C++ and Python\", temp2=\"Java\", temp3 = \"xyz\""
 
-# Check if "int" is present at the beginning of a word:
+# Check if "String" is present at the beginning of a word:
 
 datatype = re.findall("^String", inputStr)
 
@@ -10,13 +10,15 @@ array = [datatype[0]]
 
 print("Datatype =", array[0])
 
-##### When declaration is like "String temp="Hello!" "
+##### When declaration is like "String temp="Hello!", temp2 = "Bye!" "
 tempStr = inputStr.replace('String', '')
+tempStr = tempStr.split(",")
 
-tempStr = tempStr.rsplit("=", 1)
-tempStr = tempStr[0].strip()
+for i in range(len(tempStr)):
+    array.append(tempStr[i].split("=")[0].strip())    ###Split on = for each entry in list | Get left element of = | strip extra spaces |
 
-array.append(tempStr)
-print("Variable =", array[1])
+print("Variables =")
+for i in range(1, len(array)):
+    print(array[i])
 
 print(array)
