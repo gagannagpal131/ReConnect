@@ -20,9 +20,9 @@ for i in x:
 for i in range(len(x)):
     if x[i] != "":
         array.append(x[i])
-
+"""
 print("Variables =")
 for i in range(1, len(array)):
     print(array[i])
-
-# print(array)
+"""
+print(array)
