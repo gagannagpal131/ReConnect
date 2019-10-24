@@ -1,3 +1,4 @@
+#This is to implement string searching in the program
 import re
 
 inputStr = "String temp = \"C++ and Python\", temp2=\"Java\", temp3 = \"xyz\""
