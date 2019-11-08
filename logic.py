@@ -3,9 +3,7 @@ import re
 with open('SampleCPP.cpp') as file:
     listOfLines = file.readlines()
 
-
 # Classname logic
-
 def getClassNames():
     classListTmp1 = []  # Array of All the lines which start with the word 'class'
     for i in range(0, len(listOfLines)):
@@ -53,7 +51,21 @@ def getInheritanceList():
         # classInheritenceListTmp2[i][j] = classInheritenceListTmp2[i][j].strip()
         classInheritenceList.append(classInheritenceListTmp2[i])
 
-    print(classInheritenceList)
+    #print(classInheritenceList)
+    #print(dictClassInheritances)
+
+    for i in range (0,len(classInheritenceList)):
+        dictClassInheritances[classInheritenceList[i][0]] = []
+    #print(dictClassInheritances)
+
+
+    for i in range(0,len(classInheritenceList)):
+        #print(classInheritenceList[i][0])
+        for j in range(1, len(classInheritenceList[i])):
+            dictClassInheritances[classInheritenceList[i][0]].append(classInheritenceList[i][j])
+            #print(classInheritenceList[i][j])
+
+    #print(dictClassInheritances)
 
 
 # Logic to find where each class ends
@@ -145,7 +157,7 @@ def getVariables():     #This method is for finding all variables of a class and
             j = j+1
         temparr2 = []
     # print(temparr2)
-    print(dictClassVariables)
+    #print(dictClassVariables)
 
 
 def getFunctions():     #This method is for finding all Functions of a class and adding in dictionary
@@ -161,7 +173,7 @@ def getFunctions():     #This method is for finding all Functions of a class and
                 dictClassMethods[classList[i]] = temparr
             j = j + 1
         temparr = []
-    print(dictClassMethods)
+    #print(dictClassMethods)
 
 
 def createFinalStorage():
@@ -172,4 +184,77 @@ def createFinalStorage():
     getVariables()
     getFunctions()
 
-createFinalStorage();    
+    #code to remove key:None values from the dictionaries
+    toDeleteNone = []
+    for key in dictClassInheritances:
+        #print(key)
+        if dictClassInheritances[key] == None:
+            toDeleteNone.append(key)
+
+    for i in toDeleteNone:
+        del dictClassInheritances[i]
+        #print()
+
+    toDeleteNone = []
+    for key in dictClassMethods:
+        #print(key)
+        if dictClassMethods[key] == None:
+            toDeleteNone.append(key)
+
+    for i in toDeleteNone:
+        del dictClassMethods[i]
+        #print()
+    #print(dictClassMethods)
+
+    toDeleteNone = []
+    for key in dictClassVariables:
+        #print(key)
+        if dictClassVariables[key] == None:
+            toDeleteNone.append(key)
+
+    for i in toDeleteNone:
+        del dictClassVariables[i]
+        #print()
+    #print(dictClassVariables)
+
+    #Code to setup the "dictClassMethods"
+    print()
+
+    tempDict = dictClassMethods.copy()
+    for key in tempDict:
+        dictClassMethods[key] = []
+        i = 0;
+        while((i+1) <= len(tempDict[key])):
+            my_str = tempDict[key][i]+" " + tempDict[key][i+1]
+            i = i + 2
+            #print(my_str)
+            (dictClassMethods[key]).append(my_str)
+    #print(dictClassMethods)
+
+    #Code to setup the "dictClassVariables"
+    tempDict = dictClassVariables.copy()
+    for key in tempDict:
+        #print(tempDict[key])
+        dictClassVariables[key] = []
+        for j in tempDict[key]:
+            #print(len(j))
+            #print(j)
+            for k in range(1,len(j)):
+                my_str = j[0] +" "+j[k];
+                (dictClassVariables[key]).append(my_str)
+
+
+def main():
+
+    createFinalStorage()
+
+    print(classList)
+    print()
+    print(dictClassInheritances)
+    print()
+    print(dictClassMethods)
+    print()
+    print(dictClassVariables)
+    print()
+
+main()
