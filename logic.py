@@ -20,7 +20,7 @@ def getClassNames():
 
     for i in range(0, len(classListTmp1)):
         classList.append(classListTmp1[i].split(" ")[1])
-    print(classList)
+    #print(classList)
 
     # Adding classnames to dictionaries for Inheritance, Methods and Variables
     global dictClassVariables, dictClassInheritances, dictClassMethods
@@ -68,8 +68,7 @@ def getClassEndings():
         if tempIndex[i] != -1:
             lineNumbersOfClassEnding.append(i)
 
-    # print(lineNumbersOfClassEnding)
-
+    #print(lineNumbersOfClassEnding)
 
 # Variables logic starts
 
@@ -87,7 +86,8 @@ def varExtIntDouble(inputStr):      # This method extracts variables (type int a
             array.append(x[i])
     return array
 
-def varExtString(inputStr):
+def varExtString(inputStr):         # This method extracts variables (type string) and their datatype from
+                                    # the passed string and return as array
     inputStr = inputStr.strip();
     if re.match(r".*\(+.*\)", inputStr):
         return None
@@ -102,6 +102,22 @@ def varExtString(inputStr):
                                                         # | strip extra spaces |
     return array
 
+def varExtChar(inputStr):       # This method extracts variables (type char) and their datatype from
+                                    # the passed string and return as array
+    inputStr = inputStr.strip();
+    if re.match(r".*\(+.*\)", inputStr):
+        return None
+
+    tempStr = inputStr.replace('char', '').replace(';', '')
+    tempStr = tempStr.split(",")
+
+    array = ["char"]
+
+    for i in range(len(tempStr)):
+        array.append(tempStr[i].split("=")[0].strip())  # Split on = for each entry in list | Get left element of =
+                                                        # | strip extra spaces |
+    return array
+
 
 def getVariables():     #This method is for finding all variables of a class and adding in dictionary
     j = 0
@@ -109,7 +125,7 @@ def getVariables():     #This method is for finding all variables of a class and
     temparr2 = []
     for i in range(0, len(lineNumbersOfClassEnding)):
         while j <= lineNumbersOfClassEnding[i]:
-            startingWord = re.findall("^double|^int|^string", listOfLines[j].strip())
+            startingWord = re.findall("^double|^int|^string|^char", listOfLines[j].strip())
             # print(startingWord)
             if startingWord == ["int"] or startingWord == ["double"]:
                 temparr = varExtIntDouble(listOfLines[j])
@@ -121,7 +137,11 @@ def getVariables():     #This method is for finding all variables of a class and
                 if temparr is not None:
                     temparr2.append(temparr)
                     dictClassVariables[classList[i]] = temparr2
-
+            elif startingWord == ["char"]:
+                temparr = varExtChar(listOfLines[j])
+                if temparr is not None:
+                    temparr2.append(temparr)
+                    dictClassVariables[classList[i]] = temparr2
             j = j+1
         temparr2 = []
     # print(temparr2)
@@ -144,8 +164,12 @@ def getFunctions():     #This method is for finding all Functions of a class and
     print(dictClassMethods)
 
 
-getClassNames()
-getInheritanceList()
-getClassEndings()
-getVariables()
-getFunctions()
+def createFinalStorage():
+
+    getClassNames()
+    getInheritanceList()
+    getClassEndings()
+    getVariables()
+    getFunctions()
+
+createFinalStorage();    
