@@ -1,73 +1,74 @@
 import re
 
-# class_names = set([])
-
-
 with open('SampleCPP.cpp') as file:
     listOfLines = file.readlines()
 
+
 # Classname logic
 
-# def name_of_classes():
-classListTmp1 = []  # Array of All the lines which start with the word 'class'
-for i in range(0, len(listOfLines)):
-    listOfLines[i] = listOfLines[i].replace('\n', '')
-    listOfLines[i] = listOfLines[i].replace('{', '')
-    if "class" in listOfLines[i]:
-        classListTmp1.append(listOfLines[i])
-# print(classListTmp1)
+def getClassNames():
+    classListTmp1 = []  # Array of All the lines which start with the word 'class'
+    for i in range(0, len(listOfLines)):
+        listOfLines[i] = listOfLines[i].replace('\n', '')
+        listOfLines[i] = listOfLines[i].replace('{', '')
+        if "class" in listOfLines[i]:
+            classListTmp1.append(listOfLines[i])
+    # print(classListTmp1)
 
-classList = []  # Array of All the Class Names
-for i in range(0, len(classListTmp1)):
-    classList.append(classListTmp1[i].split(" ")[1])
-# print(classList)
+    global classList
+    classList = []  # Array of All the Class Names
 
-# Adding classnames to dictionaries for Inheritance, Methods and Variables
+    for i in range(0, len(classListTmp1)):
+        classList.append(classListTmp1[i].split(" ")[1])
+    print(classList)
 
-dictClassVariables = dict.fromkeys(classList, None)
-dictClassInheritances = dict.fromkeys(classList, None)
-dictClassMethods = dict.fromkeys(classList, None)
+    # Adding classnames to dictionaries for Inheritance, Methods and Variables
+    global dictClassVariables, dictClassInheritances, dictClassMethods
+    dictClassVariables = dict.fromkeys(classList, None)
+    dictClassInheritances = dict.fromkeys(classList, None)
+    dictClassMethods = dict.fromkeys(classList, None)
 
 
 # Inheritance logic
+def getInheritanceList():
+    classInheritenceListTmp1 = []
+    for i in range(0, len(listOfLines)):
+        if re.match("^class.*protected", listOfLines[i]) or re.match("^class.*private", listOfLines[i]) or \
+                re.match("^class.*public", listOfLines[i]):
+            classInheritenceListTmp1.append(listOfLines[i])
 
-classInheritenceListTmp1 = []
-for i in range(0, len(listOfLines)):
-    if re.match("^class.*protected", listOfLines[i]) or re.match("^class.*private", listOfLines[i]) or \
-            re.match("^class.*public", listOfLines[i]):
-        classInheritenceListTmp1.append(listOfLines[i])
+    # print(classInheritenceListTmp1)
 
-# print(classInheritenceListTmp1)
+    classInheritenceListTmp2 = []
+    for i in range(0, len(classInheritenceListTmp1)):
+        classInheritenceListTmp2.append(re.split(":|,", classInheritenceListTmp1[i]))
 
-classInheritenceListTmp2 = []
-for i in range(0, len(classInheritenceListTmp1)):
-    classInheritenceListTmp2.append(re.split(":|,", classInheritenceListTmp1[i]))
+    # print(classInheritenceListTmp2)
 
-# print(classInheritenceListTmp2)
+    classInheritenceList = []  # Array of All the Class Inheritances by a class
+    for i in range(0, len(classInheritenceListTmp2)):
+        # for j in range(0, len(classInheritenceListTmp2[i])-1):
+        classInheritenceListTmp2[i][0] = classInheritenceListTmp2[i][0].replace("class", '')
+        classInheritenceListTmp2[i][0] = classInheritenceListTmp2[i][0].strip()
+        # classInheritenceListTmp2[i][j] = classInheritenceListTmp2[i][j].strip()
+        classInheritenceList.append(classInheritenceListTmp2[i])
 
-classInheritenceList = []  # Array of All the Class Inheritances by a class
-for i in range(0, len(classInheritenceListTmp2)):
-    # for j in range(0, len(classInheritenceListTmp2[i])-1):
-    classInheritenceListTmp2[i][0] = classInheritenceListTmp2[i][0].replace("class", '')
-    classInheritenceListTmp2[i][0] = classInheritenceListTmp2[i][0].strip()
-    # classInheritenceListTmp2[i][j] = classInheritenceListTmp2[i][j].strip()
-    classInheritenceList.append(classInheritenceListTmp2[i])
-
-# print(classInheritenceList)
+    print(classInheritenceList)
 
 
 # Logic to find where each class ends
+def getClassEndings():
+    tempIndex = []
+    global lineNumbersOfClassEnding
+    lineNumbersOfClassEnding = []        # It is used to hold line numbers of "};", which means, where each class ends.
+                                         # It will be (actual line - 1) because index of listOflLines starts from 0
 
-tempIndex = []
-lineNumbersOfClassEnding = []        # It is used to hold line numbers of "};", which means, where each class ends. It
-                                     # will be (actual line - 1) because index of listOflLines starts from 0
+    for i in range(0, len(listOfLines)):
+        tempIndex.append(listOfLines[i].find('};'))
+        if tempIndex[i] != -1:
+            lineNumbersOfClassEnding.append(i)
 
-for i in range(0, len(listOfLines)):
-    tempIndex.append(listOfLines[i].find('};'))
-    if tempIndex[i] != -1:
-        lineNumbersOfClassEnding.append(i)
-
-print(lineNumbersOfClassEnding)
+    # print(lineNumbersOfClassEnding)
 
 
 # Variables logic starts
@@ -88,6 +89,9 @@ def varExtIntDouble(inputStr):      # This method extracts variables (type int a
 
 def varExtString(inputStr):
     inputStr = inputStr.strip();
+    if re.match(r".*\(+.*\)", inputStr):
+        return None
+
     tempStr = inputStr.replace('string', '').replace(';', '')
     tempStr = tempStr.split(",")
 
@@ -123,5 +127,25 @@ def getVariables():     #This method is for finding all variables of a class and
     # print(temparr2)
     print(dictClassVariables)
 
-getVariables()
 
+def getFunctions():     #This method is for finding all Functions of a class and adding in dictionary
+    j = 0
+    temparr = []
+    for i in range(0, len(lineNumbersOfClassEnding)):
+        while j <= lineNumbersOfClassEnding[i]:
+            startingWord = re.findall("^int|^string|^void", listOfLines[j].strip())
+            if re.match(r".*\(+.*\)", listOfLines[j]):
+                x = re.split("\s|\(", listOfLines[j].strip())
+                temparr.append(x[0])
+                temparr.append(x[1])
+                dictClassMethods[classList[i]] = temparr
+            j = j + 1
+        temparr = []
+    print(dictClassMethods)
+
+
+getClassNames()
+getInheritanceList()
+getClassEndings()
+getVariables()
+getFunctions()

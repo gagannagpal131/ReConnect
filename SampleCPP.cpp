@@ -33,6 +33,10 @@ class child1 : public parent1 , private parent2
 class child2 : public parent3 
 {
 	int acc;
+	void method3()
+	{
+		
+	}
 };
 
 class child3 : protected parent2 , public parent3 
@@ -42,4 +46,12 @@ class child3 : protected parent2 , public parent3
 
 class child4 : private parent2 
 {
+	string method4(int a)
+	{
+		
+	}int acc;
+	void chld4()
+	{
+		
+	}
 };
