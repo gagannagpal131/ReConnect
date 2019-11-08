@@ -1,24 +1,10 @@
-#This file is to implement the program logic.
 import re
 
-class_names = set([])
-
-class_inheritance = {}
-class_methods = {}
-class_variables = {}
-
-
-
-
-
-
-
+# class_names = set([])
 
 
 with open('SampleCPP.cpp') as file:
     listOfLines = file.readlines()
-
-
 
 # Classname logic
 
@@ -36,6 +22,11 @@ for i in range(0, len(classListTmp1)):
     classList.append(classListTmp1[i].split(" ")[1])
 # print(classList)
 
+# Adding classnames to dictionaries for Inheritance, Methods and Variables
+
+dictClassVariables = dict.fromkeys(classList, None)
+dictClassInheritances = dict.fromkeys(classList, None)
+dictClassMethods = dict.fromkeys(classList, None)
 
 
 # Inheritance logic
@@ -62,5 +53,75 @@ for i in range(0, len(classInheritenceListTmp2)):
     # classInheritenceListTmp2[i][j] = classInheritenceListTmp2[i][j].strip()
     classInheritenceList.append(classInheritenceListTmp2[i])
 
-print(classInheritenceList)
-# name_of_classes()
+# print(classInheritenceList)
+
+
+# Logic to find where each class ends
+
+tempIndex = []
+lineNumbersOfClassEnding = []        # It is used to hold line numbers of "};", which means, where each class ends. It
+                                     # will be (actual line - 1) because index of listOflLines starts from 0
+
+for i in range(0, len(listOfLines)):
+    tempIndex.append(listOfLines[i].find('};'))
+    if tempIndex[i] != -1:
+        lineNumbersOfClassEnding.append(i)
+
+print(lineNumbersOfClassEnding)
+
+
+# Variables logic starts
+
+def varExtIntDouble(inputStr):      # This method extracts variables (type int and double) and their datatype from
+                                    # the passed string and return as array
+    inputStr = inputStr.strip()     #To remove empty space from beginning of string
+    if re.match(r".*\(+.*\)", inputStr):
+        return None
+
+    array = []
+    x = re.split("\s|;|,|=|[0-9]", inputStr)
+
+    for i in range(len(x)):
+        if x[i] != "":
+            array.append(x[i])
+    return array
+
+def varExtString(inputStr):
+    inputStr = inputStr.strip();
+    tempStr = inputStr.replace('string', '').replace(';', '')
+    tempStr = tempStr.split(",")
+
+    array = ["string"]
+
+    for i in range(len(tempStr)):
+        array.append(tempStr[i].split("=")[0].strip())  # Split on = for each entry in list | Get left element of =
+                                                        # | strip extra spaces |
+    return array
+
+
+def getVariables():     #This method is for finding all variables of a class and adding in dictionary
+    j = 0
+    temparr = []
+    temparr2 = []
+    for i in range(0, len(lineNumbersOfClassEnding)):
+        while j <= lineNumbersOfClassEnding[i]:
+            startingWord = re.findall("^double|^int|^string", listOfLines[j].strip())
+            # print(startingWord)
+            if startingWord == ["int"] or startingWord == ["double"]:
+                temparr = varExtIntDouble(listOfLines[j])
+                if temparr is not None:
+                    temparr2.append(temparr)
+                    dictClassVariables[classList[i]] = temparr2
+            elif startingWord == ["string"]:
+                temparr = varExtString(listOfLines[j])
+                if temparr is not None:
+                    temparr2.append(temparr)
+                    dictClassVariables[classList[i]] = temparr2
+
+            j = j+1
+        temparr2 = []
+    # print(temparr2)
+    print(dictClassVariables)
+
+getVariables()
+

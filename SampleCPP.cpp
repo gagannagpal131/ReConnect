@@ -1,43 +1,45 @@
-
-
-class parent1 {
-
-int a, b, c=10;
-
-
+class parent1 
+{
+	int a=6, b, c=10;
+	string myStr = "sehaj", noStr="Singh";
 };
 
-class parent2 {
+class parent2
+{
+	int a=6, b, c=10;
+	int x,y,z=10;
 
-int x,y,z=10;
+	int method1() 
+	{
+		Cout<<"method 1 output";
+	}
 
-int method1() {
-
-Cout<<"method 1 output";
-
-}
-
-int method2() {
-
-Cout<<"method 2 output";
-
-}
-
+	int method2() 
+	{
+		double dbl=98, yeah;
+		Cout<<"method 2 output";
+	}
 };
 
-class parent3 {
-
+class parent3 
+{
 };
 
-class child1 : public parent1 , private parent2 {
+class child1 : public parent1 , private parent2 
+{
+	int sehaj;
 };
 
-class child2 : public parent3 {
+class child2 : public parent3 
+{
+	int acc;
 };
 
-class child3 : protected parent2 , public parent3 {
+class child3 : protected parent2 , public parent3 
+{
+	int ase, ns=69;
 };
 
-class child4 : private parent2 {
+class child4 : private parent2 
+{
 };
-
