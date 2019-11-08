@@ -244,17 +244,8 @@ def createFinalStorage():
                 (dictClassVariables[key]).append(my_str)
 
 
-def main():
+#This function is to be called in UI.py to get the dictionaries with data.
+def returnToUI():
 
     createFinalStorage()
-
-    print(classList)
-    print()
-    print(dictClassInheritances)
-    print()
-    print(dictClassMethods)
-    print()
-    print(dictClassVariables)
-    print()
-
-main()
+    return classList, dictClassInheritances,dictClassMethods,dictClassVariables
