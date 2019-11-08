@@ -47,7 +47,7 @@ class child3 : protected parent2 , public parent3
 
 class child4 : private parent2
 {
-	string method4(int a)
+	float method4(int a)
 	{
 
 	}int acc;
