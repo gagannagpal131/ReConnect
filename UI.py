@@ -1,25 +1,28 @@
 #This file is to implement the UI for the logic.
 import logic
-from tkinter import *
+import tkinter as tk
 
 classList, dictClassInheritances,dictClassMethods,dictClassVariables = logic.returnToUI()
-print(classList)
-print()
-print(dictClassInheritances)
-print()
-print(dictClassMethods)
-print()
-print(dictClassVariables)
-print()
 
-"""
-window = Tk()
-my_var = " hello"
-window.title("Welcome to ReConnect: Class Level Architecture Recovery")
+#print(classList)
+#print()
+#print(dictClassInheritances)
+#print()
+#print(dictClassMethods)
+#print()
+#print(dictClassVariables)
+#print()
 
-lbl = Label(window, text="Hello"+my_var)
+def printClassDetails(className):
+    print (className)
 
-lbl.grid(column=300, row=300)
+window = tk.Tk()
+window.title("ReConnect: Class Level Architecture Recovery")
+window.geometry('700x1000')
+window['bg'] = 'LightBlue1'
+
+for i in range (0, len(classList)):
+    button = tk.Button(window, width=30, text=classList[i],command=lambda className = classList[i]: printClassDetails(className))
+    button.pack(side=tk.TOP,pady=20)
 
 window.mainloop()
-"""
