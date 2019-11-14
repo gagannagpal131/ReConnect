@@ -9,7 +9,7 @@ def getClassNames():
     for i in range(0, len(listOfLines)):
         listOfLines[i] = listOfLines[i].replace('\n', '')
         listOfLines[i] = listOfLines[i].replace('{', '')
-        if "class" in listOfLines[i]:
+        if re.match("^class", listOfLines[i]):
             classListTmp1.append(listOfLines[i])
     # print(classListTmp1)
 
