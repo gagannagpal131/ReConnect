@@ -1,6 +1,7 @@
 #This file is to implement the UI for the logic.
 import logic
 import tkinter as tk
+from random import randint
 
 classList, dictClassInheritances,dictClassMethods,dictClassVariables = logic.returnToUI()
 
@@ -17,14 +18,19 @@ def printClassDetails(className):
     #Creating new window
     windowNew = tk.Tk()
     windowNew.title(className)
+    heading = tk.Label(windowNew,text="Class: "+className,pady=20,bg='SteelBlue1',font=("Helvetica", 20,"bold"))
+    heading.pack()
     #windowStart = 500+(counter*300)
-    windowStart = 500;
-    windowNew.geometry('400x600+%d+%d'%(windowStart,windowStart))
-    windowNew['bg'] = 'LightBlue1'
+    windowStart = 500+randint(300,700)
+    windowNew.geometry('550x700+%d+%d'%(windowStart,0))
+    windowNew['bg'] = 'SteelBlue1'
 
     #Adding inheritences
-    Section1 = tk.Text(windowNew, height=10, width=40)
+    Section1 = tk.Text(windowNew, height=10, width=55)
+    Section1['bg'] = 'LightBlue1'
+    Section1['font'] = "helvetica 14 bold"
     Section1.pack(pady = 20)
+    Section1.insert(tk.END, 'Classes Inherited by class '+className+ ' are given below:\n\n')
     if className in dictClassInheritances:
         Section1.insert(tk.END, 'Format: <Access Specifier> <Class Name>\n\n')
         st1=dictClassInheritances[className]
@@ -36,8 +42,11 @@ def printClassDetails(className):
     #w.pack()
 
     #Adding methods
-    Section2 = tk.Text(windowNew, height=10, width=40)
+    Section2 = tk.Text(windowNew, height=10, width=55)
+    Section2['bg'] = 'LightBlue1'
+    Section2['font'] = "helvetica 14 bold"
     Section2.pack(pady = 20)
+    Section2.insert(tk.END, 'Methods present in class '+className+ ' are given below:\n\n')
     if className in dictClassMethods:
         Section2.insert(tk.END, 'Format: <Return Type> <Method Name>\n\n')
         st2=dictClassMethods[className]
@@ -46,9 +55,12 @@ def printClassDetails(className):
     else:
         Section2.insert(tk.END, 'No methods are defined in this class\n')
 
-    #Adding variables
-    Section3 = tk.Text(windowNew, height=10, width=40)
+    #Adding variabless
+    Section3 = tk.Text(windowNew, height=10, width=55)
+    Section3['bg'] = 'LightBlue1'
+    Section3['font'] = "helvetica 14 bold"
     Section3.pack(pady = 20)
+    Section3.insert(tk.END, 'Variables present in class '+className+ ' are given below:\n\n')
     if className in dictClassVariables:
         Section3.insert(tk.END, 'Format: <Type> <Variable Name>\n\n')
         st3=dictClassVariables[className]
