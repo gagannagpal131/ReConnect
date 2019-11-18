@@ -91,8 +91,12 @@ heading.pack()
 heading1 = tk.Label(window,text="All the classes present in the Input source are given below.\nClick on a class to view its Inheritance, Methods and Variables.",pady=20,bg='grey1',fg='green1',font=("calibri", 14))
 heading1.pack()
 
-for i in range (0, len(classList)):
-    button = tk.Button(window, width=25, text=classList[i],fg='grey1',font=("calibri", 12,"bold"),command=lambda i = i: printClassDetails(classList[i]))
-    button.pack(side=tk.TOP,pady=5)
+for i in range (0, (int(len(classList)/2))):
+    button = tk.Button(window, width=20, text=classList[i],fg='grey1',font=("calibri", 12,"bold"),command=lambda i = i: printClassDetails(classList[i])).place(x=70, y=200+(i*50))
+    #button.pack(side=tk.TOP,pady=5)
+    #button.grid(columnspan=3)
+
+for i in range ((int(len(classList)/2)+1),len(classList)):
+    button1 = tk.Button(window, width=20, text=classList[i],fg='grey1',font=("calibri", 12,"bold"),command=lambda i = i: printClassDetails(classList[i])).place(x=320, y=200+(i-(int(len(classList)/2))-1)*50)
 
 window.mainloop()

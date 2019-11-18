@@ -98,3 +98,13 @@ class base : public intermediate
 		out<<"Test output 5";
 	}
 };
+
+class Hello{
+
+int a, b, c;
+int testFunction(){
+
+	cout<<"This is the final class of our code."
+	}
+
+};
