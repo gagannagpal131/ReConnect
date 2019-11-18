@@ -18,19 +18,22 @@ def printClassDetails(className):
     #Creating new window
     windowNew = tk.Tk()
     windowNew.title(className)
-    heading = tk.Label(windowNew,text="Class: "+className,pady=20,bg='SteelBlue1',font=("Helvetica", 20,"bold"))
+    heading = tk.Label(windowNew,text="Class: "+className,pady=20,bg='grey1',fg='green1',font=("century gothic", 20,"bold"))
     heading.pack()
     #windowStart = 500+(counter*300)
-    windowStart = 500+randint(100,700)
-    windowNew.geometry('550x700+%d+%d'%(windowStart,0))
-    windowNew['bg'] = 'SteelBlue1'
+    windowStart = 100+randint(100,700)
+    windowNew.geometry('450x600+%d+%d'%(windowStart,0))
+    windowNew['bg'] = 'grey1'
 
     #Adding inheritences
-    Section1 = tk.Text(windowNew, height=10, width=55)
-    Section1['bg'] = 'LightBlue1'
-    Section1['font'] = "helvetica 14 bold"
-    Section1.pack(pady = 20)
-    Section1.insert(tk.END, 'Classes Inherited by class '+className+ ' are given below:\n\n')
+    Section1 = tk.Text(windowNew, height=7, width=45)
+    Section1['bg'] = 'grey1'
+    Section1['font'] = "calibri 13 bold"
+    Section1['fg'] = 'green1'
+    Section1['bd'] = 4
+    Section1.pack(pady = 5)
+    # Section1.insert(tk.END, 'Classes Inherited by class '+className+ ' are given below:\n\n')
+    Section1.insert(tk.END, 'Classes Inherited:\n\n')
     if className in dictClassInheritances:
         Section1.insert(tk.END, 'Format: <Access Specifier>  <Class Name>\n\n')
         st1=dictClassInheritances[className]
@@ -42,11 +45,14 @@ def printClassDetails(className):
     #w.pack()
 
     #Adding methods
-    Section2 = tk.Text(windowNew, height=10, width=55)
-    Section2['bg'] = 'LightBlue1'
-    Section2['font'] = "helvetica 14 bold"
-    Section2.pack(pady = 20)
-    Section2.insert(tk.END, 'Methods present in class '+className+ ' are given below:\n\n')
+    Section2 = tk.Text(windowNew, height=7, width=45)
+    Section2['bg'] = 'grey1'
+    Section2['fg'] = 'green1'
+    Section2['bd'] = 4
+    Section2['font'] = "calibri 13 bold"
+    Section2.pack(pady = 5)
+    # Section2.insert(tk.END, 'Methods present in class '+className+ ' are given below:\n\n')
+    Section2.insert(tk.END, 'Methods: \n\n')
     if className in dictClassMethods:
         Section2.insert(tk.END, 'Format: <Return Type>  <Method Name>\n\n')
         st2=dictClassMethods[className]
@@ -56,37 +62,37 @@ def printClassDetails(className):
         Section2.insert(tk.END, 'No methods are defined in this class\n')
 
     #Adding variabless
-    Section3 = tk.Text(windowNew, height=10, width=55)
-    Section3['bg'] = 'LightBlue1'
-    Section3['font'] = "helvetica 14 bold"
-    Section3.pack(pady = 20)
-    Section3.insert(tk.END, 'Variables present in class '+className+ ' are given below:\n\n')
+    Section3 = tk.Text(windowNew, height=7, width=45)
+    Section3['bg'] = 'grey1'
+    Section3['fg'] = 'green1'
+    Section3['bd'] = 4
+    Section3['font'] = "calibri 13 bold"
+    Section3.pack(pady = 5)
+    # Section3.insert(tk.END, 'Variables present in class '+className+ ' are given below:\n\n')
+    Section3.insert(tk.END, 'Variables: \n\n')
     if className in dictClassVariables:
         Section3.insert(tk.END, 'Format: <Type>  <Variable Name>\n\n')
         st3=dictClassVariables[className]
         for i in st3:
             Section3.insert(tk.END, i+'\n')
     else:
-        Section2.insert(tk.END, 'No variables are defined in this class\n')
+        Section3.insert(tk.END, 'No variables are defined in this class\n')
 
 
 window = tk.Tk()
 window.title("ReConnect: Class Level Architecture Recovery")
-window.geometry('600x1000')
-window['bg'] = 'SteelBlue1'
+window.geometry('600x700')
+window['bg'] = 'Grey1'
 
-heading = tk.Label(window,text="ReConnect: Class Level Architecture Recovery",pady=25,bg='SteelBlue1',font=("Helvetica", 25,"bold"))
+heading = tk.Label(window,text="ReConnect\n Class Level Architecture Recovery ",pady=25,bg='grey1',fg='green1',relief='groove',bd=5,font=("century gothic", 25,"bold"))
+
 heading.pack()
 
-heading1 = tk.Label(window,text="All the classes present in the Input source are \ngiven below:",pady=15,bg='SteelBlue1',font=("Helvetica", 20))
+heading1 = tk.Label(window,text="All the classes present in the Input source are given below.\nClick on a class to view its Inheritance, Methods and Variables.",pady=20,bg='grey1',fg='green1',font=("calibri", 14))
 heading1.pack()
 
-heading2 = tk.Label(window,text="Click on a class to view its \nInheritance, Methods and Variables!",pady=15,bg='SteelBlue1',font=("Helvetica", 20))
-heading2.pack()
-
-
 for i in range (0, len(classList)):
-    button = tk.Button(window, width=30, text=classList[i],command=lambda i = i: printClassDetails(classList[i]))
-    button.pack(side=tk.TOP,pady=18)
+    button = tk.Button(window, width=25, text=classList[i],fg='grey1',font=("calibri", 12,"bold"),command=lambda i = i: printClassDetails(classList[i]))
+    button.pack(side=tk.TOP,pady=5)
 
 window.mainloop()
