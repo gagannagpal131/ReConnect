@@ -28,6 +28,7 @@ def printClassDetails(className):
     windowNew.geometry('450x600+%d+%d'%(windowStart,0))
     windowNew['bg'] = 'grey1'
 
+    #Creating Section in Class View for viewing Inheritences
     #Adding inheritences
     Section1 = tk.Text(windowNew, height=7, width=45)
     Section1['bg'] = 'grey1'
@@ -47,6 +48,7 @@ def printClassDetails(className):
     #w = tk.Label(Section1, text=dictClassInheritances[st1])
     #w.pack()
 
+    #Creating Section in Class View for viewing Methods
     #Adding methods
     Section2 = tk.Text(windowNew, height=7, width=45)
     Section2['bg'] = 'grey1'
@@ -64,6 +66,7 @@ def printClassDetails(className):
     else:
         Section2.insert(tk.END, 'No methods are defined in this class\n')
 
+    #Creating Section in Class View for viewing Variables
     #Adding variabless
     Section3 = tk.Text(windowNew, height=7, width=45)
     Section3['bg'] = 'grey1'
