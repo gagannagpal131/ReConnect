@@ -15,7 +15,7 @@ classList, dictClassInheritances,dictClassMethods,dictClassVariables = logic.ret
 #print()
 
 def printClassDetails(className):
-    #Creating new window
+    #Creation of Class view
     windowNew = tk.Tk()
     windowNew.title(className)
     heading = tk.Label(windowNew,text="Class: "+className,pady=20,bg='grey1',fg='green1',font=("century gothic", 20,"bold"))
@@ -81,7 +81,7 @@ def printClassDetails(className):
     else:
         Section3.insert(tk.END, 'No variables are defined in this class\n')
 
-
+#Creation of Main View
 window = tk.Tk()
 window.title("ReConnect: Class Level Architecture Recovery")
 window.geometry('600x700')
