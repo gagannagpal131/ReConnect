@@ -104,7 +104,7 @@ for i in range (0, (int(len(classList)/2))):
     #button.pack(side=tk.TOP,pady=5)
     #button.grid(columnspan=3)
 
-for i in range ((int(len(classList)/2)+1),len(classList)):
-    button1 = tk.Button(window, width=20, text=classList[i],fg='grey1',font=("calibri", 12,"bold"),bg='wheat1',command=lambda i = i: printClassDetails(classList[i])).place(x=300, y=230+(i-(int(len(classList)/2))-1)*50)
+for i in range ((int(len(classList)/2)),len(classList)):
+    button1 = tk.Button(window, width=20, text=classList[i],fg='grey1',font=("calibri", 12,"bold"),bg='wheat1',command=lambda i = i: printClassDetails(classList[i])).place(x=300, y=230+(i-(int(len(classList)/2)))*50)
 
 window.mainloop()

@@ -1,10 +1,10 @@
-class parent1
+class Parent1
 {
 	int a=6, b, c=10;
 	string myStr = "sehaj", noStr="Singh";
 };
 
-class parent2
+class Parent2
 {
 	int a=6, b, c=10;
 	int x,y,z=10;
@@ -21,43 +21,11 @@ class parent2
 	}
 };
 
-class parent3
+class Parent3
 {
 };
 
-class child1 : public parent1 , private parent2
-{
-	int sehaj;
-	double Gagandeep;
-};
-
-class child2 : public parent3
-{
-	int acc;
-	void method3()
-	{
-		cout<<"method 3 output"
-	}
-};
-
-class child3 : protected parent2 , public parent3
-{
-	int ase, ns=69;
-};
-
-class child4 : private parent2
-{
-	float method4(int a)
-	{
-
-	}int acc;
-	void child4_method()
-	{
-
-	}
-};
-
-class super
+class Super
 {
 
 int method1(){
@@ -70,7 +38,7 @@ int method1(){
 
 };
 
-class intermediate : public super
+class Intermediate : public Super
 {
 int a = 0;
 string s = "hello";
@@ -81,7 +49,41 @@ int method2(){
 
 };
 
-class base : public intermediate
+class Child1 : public Parent1 , private Parent2
+{
+	int sehaj;
+	double Gagandeep;
+};
+
+class Child2 : public Parent3
+{
+	int acc;
+	void method3()
+	{
+		cout<<"method 3 output"
+	}
+};
+
+class Child3 : protected Parent2 , public Parent3
+{
+	int ase, ns=69;
+};
+
+class Child4 : private Parent2
+{
+	float method4(int a)
+	{
+
+	}int acc;
+	void child4_method()
+	{
+
+	}
+};
+
+
+
+class Base : public Intermediate
 {
 
 	int ab = 10;
@@ -97,14 +99,4 @@ class base : public intermediate
 
 		out<<"Test output 5";
 	}
-};
-
-class Hello{
-
-int a, b, c;
-int testFunction(){
-
-	cout<<"This is the final class of our code."
-	}
-
 };
