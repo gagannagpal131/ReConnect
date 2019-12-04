@@ -6,7 +6,7 @@
 
 **Python File: logic.py**<br/>
 This file implements the following aspects:</br>
---> The names of all the classes present in the source code are extracted and staored as a class list <br/>
+--> The names of all the classes present in the source code are extracted and stored as a class list <br/>
 --> Inheritance, Methods and Variables of the classes present in the source code are extracted <br/>
 --> Relationship among the classes is stored using Python dictionaries.<br/>
 
